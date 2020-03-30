@@ -16,15 +16,16 @@ class Car {
    *  isOn - заведен ли автомобиль, значения true или false. Изначально false
    *  distance - общий киллометраж, изначально 0
    */
-  constructor(speed, price, maxSpeed, isOn, distance) {
+  static getSpecs(car) {
+    console.log(car);
+  }
+
+  constructor({ speed = 0, price, maxSpeed, isOn = false, distance = 0 }) {
     this.speed = speed;
     this._price = price;
     this.maxSpeed = maxSpeed;
     this.isOn = isOn;
     this.distance = distance;
-  }
-  static getSpecs(car) {
-    console.log(car);
   }
 
   /*
@@ -34,6 +35,7 @@ class Car {
   set price(price) {
     this._price = price;
   }
+
   get price() {
     return this._price;
   }
@@ -53,7 +55,7 @@ class Car {
    */
   turnOff() {
     this.isOn = false;
-    this.Speed = 0;
+    this.speed = 0;
   }
 
   /*
@@ -64,21 +66,16 @@ class Car {
   accelerate(value) {
     if (this.speed + value <= this.maxSpeed) {
       this.speed += value;
-      return true;
-    } else {
-      return false;
     }
   }
+
   /*
    * Отнимает от свойства speed полученное значение,
    * при условии что результирующая скорость не меньше нуля
    */
   decelerate(value) {
-    if (this.speed + value <= 0) {
+    if (this.speed - value >= 0) {
       this.speed -= value;
-      return true;
-    } else {
-      return false;
     }
   }
 
@@ -88,10 +85,7 @@ class Car {
    */
   drive(hours) {
     if (this.speed !== 0) {
-      this.distance = hours * this.speed;
-      return true;
-    } else {
-      return false;
+      this.distance += hours * this.speed;
     }
   }
 }
